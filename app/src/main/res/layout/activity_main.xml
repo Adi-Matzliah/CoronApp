@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="MainActivityBinding">
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.exercise.supercom.coronaapp.util.DateUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.exercise.supercom.coronaapp.feature.main.MainViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        tools:context=".feature.main.MainActivity">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_location_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/get_country_statistics_header"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10sp"
+            app:cardMaxElevation="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_location_header"
+            app:strokeColor="@color/colorPrimary">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Spinner
+                    android:id="@+id/sp_countries"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="7dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_or"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_or"
+                    app:layout_constraintTop_toTopOf="@+id/tv_or"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:gravity="center"
+                    android:text="@string/or"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn_my_location"
+                    app:layout_constraintStart_toEndOf="@+id/btn_my_location"
+                    app:layout_constraintTop_toTopOf="@+id/btn_my_location" />
+
+                <Button
+                    android:id="@+id/btn_my_location"
+                    android:layout_width="80dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:onClick="onFindLocationBtnPressed"
+                    android:text="@string/use_my_location"
+                    android:textSize="8sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_countries"
+                    app:layout_constraintStart_toEndOf="@+id/tv_countries"
+                    app:layout_constraintTop_toTopOf="@+id/tv_countries"
+                    tools:ignore="SmallSp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_countries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/select_country"
+                    app:drawableStartCompat="@drawable/ic_map_location"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/start_date"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_countries" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_select_start_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/white"
+                    android:text="@{TextUtils.isEmpty(viewModel.fromDate) ? @string/click_here : viewModel.fromDate}"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_start_date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/btn_my_location"
+                    app:layout_constraintTop_toTopOf="@+id/tv_start_date" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/end_date"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_select_start_date" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_select_end_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/white"
+                    android:text="@{TextUtils.isEmpty(viewModel.toDate) ? @string/click_here : viewModel.toDate}"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_end_date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_select_start_date"
+                    app:layout_constraintTop_toTopOf="@+id/tv_end_date" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:enabled="@{!viewModel.isLoading &amp;&amp; !TextUtils.isEmpty(viewModel.fromDate) &amp;&amp; !TextUtils.isEmpty(viewModel.toDate) &amp;&amp; DateUtils.INSTANCE.areDatesArrangedChronologically(viewModel.fromDate, viewModel.toDate)}"
+                    android:onClick="@{() -> viewModel.fetchCountryCovid19Statistics()}"
+                    android:text="@string/go"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_select_end_date" />
+
+                <FrameLayout
+                    android:id="@+id/v_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_go">
+
+                    <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/progressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:backgroundTint="@color/bg"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/colorPrimary"
+                        android:max="100"
+                        android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
+                </FrameLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_confirmed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/confirmed"
+                    android:textColor="@color/orange"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_sick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/v_separator"
+                    tools:ignore="TextContrastCheck" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_confirmed_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@{String.valueOf(viewModel.countryTotalCases.confirmed)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:visibility="@{viewModel.isLoading || TextUtils.isEmpty(viewModel.countryTotalCases.country) ? View.INVISIBLE : View.VISIBLE }"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_confirmed"
+                    app:layout_constraintStart_toEndOf="@+id/tv_confirmed"
+                    app:layout_constraintTop_toTopOf="@+id/tv_confirmed" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_recovered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="@string/recovered"
+                    android:textColor="@color/green"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_recovered"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_confirmed_counter" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_recovered_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@{String.valueOf(viewModel.countryTotalCases.recovered)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:visibility="@{viewModel.isLoading || TextUtils.isEmpty(viewModel.countryTotalCases.country) ? View.INVISIBLE : View.VISIBLE }"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_recovered"
+                    app:layout_constraintStart_toEndOf="@+id/tv_recovered"
+                    app:layout_constraintTop_toTopOf="@+id/tv_recovered" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_deaths"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    android:text="@string/deaths"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_dead"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_recovered" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_deaths_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.countryTotalCases.deaths)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:visibility="@{viewModel.isLoading || TextUtils.isEmpty(viewModel.countryTotalCases.country) ? View.INVISIBLE : View.VISIBLE }"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_deaths"
+                    app:layout_constraintStart_toStartOf="@+id/tv_recovered_counter"
+                    app:layout_constraintTop_toTopOf="@+id/tv_deaths" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_bluetooth_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/check_for_infected_person_header"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_location" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_bluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10sp"
+            app:cardMaxElevation="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_bluetooth_header"
+            app:strokeColor="@color/colorPrimary">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_mac_address"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="17"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/et_mac_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/white"
+                        android:hint="@string/valid_mac_address_hint"
+                        android:inputType="text"
+                        android:maxLength="17"
+                        android:text="@={viewModel.infectedMacAddress}"
+                        tools:ignore="SpeakableTextPresentCheck"
+                        android:importantForAutofill="no" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onBluetoothScanBtnPressed"
+                    android:text="@string/scan"
+                    app:layout_constraintBottom_toBottomOf="@+id/ti_mac_address"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ti_mac_address"
+                    app:layout_constraintTop_toTopOf="@+id/ti_mac_address" />
+
+                <View
+                    android:id="@+id/v_separator2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ti_mac_address" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_ble_scan_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:visibility="@{viewModel.isBleScanning ? View.INVISIBLE : View.VISIBLE}"
+                    android:text="@{viewModel.isMacAddressFound ? @string/mac_address_has_been_found(viewModel.infectedMacAddress) : @string/mac_address_could_not_been_found(viewModel.infectedMacAddress)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/v_separator2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CoronApp</string>
+    <string name="base_url">https://api.covid19api.com/</string>
+    <string name="select_country">Country:</string>
+    <string name="start_date">Start date:</string>
+    <string name="end_date">End date:</string>
+    <string name="click_here">Click Here…</string>
+    <string name="get_country_statistics_header">Get Country Covid-19 Statistics:</string>
+    <string name="check_for_infected_person_header">Check if an infected person is nearby:</string>
+
+    <string name="go">GO</string>
+    <string name="confirmed">Confirmed:</string>
+    <string name="recovered">Recovered:</string>
+    <string name="deaths">Deaths:</string>
+    <string name="use_my_location">USE MY LOCATION</string>
+    <string name="or">OR</string>
+    <string name="ok">OK</string>
+    <string name="scan">SCAN</string>
+
+    <!-- Messages -->
+    <string name="location_access_required">Location access is required in order to proceed.</string>
+    <string name="location_permission_not_available">Permission is not available. Requesting location permission.</string>
+    <string name="location_permission_available">Location permission is available. Starting location detection.</string>
+    <string name="location_permission_granted">Location permission was granted. Starting location detection.</string>
+    <string name="location_permission_denied">Location permission request was denied.</string>
+    <string name="bluetooth_is_not_available">Bluetooth is not available on this device.</string>
+    <string name="mac_address_has_been_found">infected person with MAC address: %s has been found!</string>
+    <string name="mac_address_could_not_been_found">No infected person with MAC address: %s.</string>
+    <string name="valid_mac_address_hint">Type a valid MAC address</string>
+</resources>
