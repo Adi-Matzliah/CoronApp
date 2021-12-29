@@ -23,7 +23,7 @@ import javax.inject.Inject
 import kotlin.Comparator
 
 const val TIME_DELAY_MS: Long = 5000
-const val MAC_ADDRESS_INFECTED = "64:E8:CE:FF:34:4E"
+const val MAC_ADDRESS_INFECTED = "64:E8:CE:FF:34:4E" // One of the mac addresses in my area for example...
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
     val countryTotalCases: MutableLiveData<CountryTotalCases>
         get() = _countryTotalCases
 
-    private val _isLoading = MutableLiveData<Boolean>()
+    private val _isLoading = MutableLiveData(false)
     val isLoading: MutableLiveData<Boolean>
         get() = _isLoading
 
@@ -63,7 +63,7 @@ class MainViewModel @Inject constructor(
     val toDate: MutableLiveData<String>
         get() = _toDate
 
-    private val _isBleScanning = MutableLiveData(true)
+    private val _isBleScanning = MutableLiveData(false)
     val isBleScanning: MutableLiveData<Boolean>
         get() = _isBleScanning
 
